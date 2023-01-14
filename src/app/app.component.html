@@ -3,6 +3,6 @@
   <option value="Monoparental">Monoparental</option>
 </select>
 
-<select [(ngModel)]="selectedChoice" [disabled]="choiceDisabled">
-  <option *ngFor="let choice of choices" [value]="choice">{{choice}}</option>
-</select>
+<div *ngFor="let choice of choices">
+  <input type="radio" [(ngModel)]="selectedChoice" [name]="selectedSituation" [value]="choice" [disabled]="choiceDisabled" > {{choice}}
+</div>
