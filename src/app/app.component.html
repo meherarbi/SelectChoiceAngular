@@ -1,8 +1,13 @@
-<select [(ngModel)]="selectedSituation" (ngModelChange)="updateChoices()">
-  <option value="Biparental">Biparental</option>
-  <option value="Monoparental">Monoparental</option>
+<div>
+  <label>Situation :</label>
+  <select [(ngModel)]="selectedSituation">
+    <option *ngFor="let situation of situations" [value]="situation">{{situation}}</option>
 </select>
 
-<div *ngFor="let choice of choices">
-  <input type="radio" [(ngModel)]="selectedChoice" [name]="selectedSituation" [value]="choice" [disabled]="choiceDisabled" > {{choice}}
+</div>
+<div>
+  <label>Choix :</label>
+  <div *ngFor="let choice of choices">
+    <input type="radio" [(ngModel)]="selectedChoice" [value]="choice" [disabled]="!enabledChoices[selectedSituation][choice]" [ngClass]="{'disabled': !enabledChoices[selectedSituation][choice]}">{{choice}}
+  </div>
 </div>

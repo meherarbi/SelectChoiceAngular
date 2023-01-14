@@ -1,29 +1,27 @@
 import { Component } from '@angular/core';
+import { ChoicesFilterPipe } from './choices-filter.pipe';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+selector: 'app-root',
+templateUrl: './app.component.html',
+styleUrls: ['./app.component.css'],
+providers: [ChoicesFilterPipe]
 })
+
 export class AppComponent {
   selectedSituation = 'Biparental';
-  selectedChoice :string='choix 1';
-  choices = ['choix 1', 'choix 2', 'choix 3'];
+  selectedChoice :string='Divorcé(e)';
+  choices = ['Divorcé(e)', 'Célibataire', 'Séparé(e)','Marié(e)','Concubin(e)','PACS'];
+  situations = ['Biparental', 'Monoparental'];
   enabledChoices :{[key:string]:{[key:string]:boolean}} = {
-    'Biparental': {'choix 1': true, 'choix 2': true, 'choix 3': false},
-    'Monoparental': {'choix 1': false, 'choix 2': false, 'choix 3': true},
+    'Biparental': {'Divorcé(e)': true, 'Célibataire': true, 'Séparé(e)': true},
+    'Monoparental': {'Marié(e)': true, 'Concubin(e)': true, 'PACS': true},
   };
-  choiceDisabled = false;
+
+
   updateChoices() {
-    this.choices = Object.entries(this.enabledChoices[this.selectedSituation])
-    .filter(([choice,enabled]) => enabled)
-    .map(([choice,enabled]) => choice);
-    this.choiceDisabled = !Object.values(this.enabledChoices[this.selectedSituation]).some(value => value);
-  }
-}
-
-
-
-
-
-
+    this.choices.forEach(choice => {
+      if(choice !== this.selectedChoice)
+      this.enabledChoices[this.selectedSituation][choice] = false;
+    });
+  }}
